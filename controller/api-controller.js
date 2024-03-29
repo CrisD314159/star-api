@@ -47,7 +47,8 @@ export class ApiController {
         body,
         goodies
       }
-      const answer = await this.model.createArticle({ input })
+
+      const answer = await this.model.createArticle(input)
 
       if (answer) { return res.status(200).json({ message: 'Article Created' }) } else { return res.status(440).json({ message: 'There was an error during the post' }) }
     } else {

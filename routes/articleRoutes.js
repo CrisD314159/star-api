@@ -15,7 +15,7 @@ export const createRouter = ({ model }) => {
 
   routes.delete('/articles/:id', controller.deleteArticle) // delete article route
 
-  routes.patch('/articles/:id', controller.updateArticle) // update article route
+  routes.put('/articles/:id', controller.updateArticle) // update article route
 
   return routes
 }
