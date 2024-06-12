@@ -81,4 +81,17 @@ export class ApiController {
 
     res.status(200).json({ message: 'Article deleted' })
   }
+
+  uploadImage = async (req, res) => {
+    const image = req.file.path
+    if (!image) {
+      return res.status(400).json({ message: 'There was an error uploading the image' })
+    }
+    const url = await this.model.uploadImage(image)
+
+    if (!url) {
+      return res.status(400).json({ message: 'There was an error uploading the image' })
+    }
+    res.status(200).json({ sucess: true, url })
+  }
 }

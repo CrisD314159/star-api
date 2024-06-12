@@ -1,5 +1,6 @@
 import express, { json } from 'express'
 import { StarModelPostgres } from './model/model-posgresql.js'
+
 import cors from 'cors'
 import 'dotenv/config'
 import { createRouter } from './routes/articleRoutes.js'
@@ -13,5 +14,5 @@ app.disable('x-powered-by')
 app.use('/', createRouter({ model: StarModelPostgres }))
 
 app.listen(port, () => {
-  console.log('listening at ' + port)
+  console.log(`Server running on http://localhost:${port} 🚀`)
 })

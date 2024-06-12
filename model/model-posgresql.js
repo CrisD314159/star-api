@@ -1,4 +1,6 @@
 import postgres from 'postgres'
+import { v2 as cloudinary } from 'cloudinary'
+import fs from 'fs'
 
 const db = postgres({
   host: process.env.PGHOST,
@@ -10,6 +12,12 @@ const db = postgres({
   connection: {
     options: `project=${process.env.ENDPOINT_ID}`
   }
+})
+
+cloudinary.config({
+  cloud_name: 'dw43hgf5p',
+  api_key: '931953722983393',
+  api_secret: process.env.API_SECRET // Click 'View Credentials' below to copy your API secret
 })
 
 export class StarModelPostgres {
@@ -71,6 +79,23 @@ export class StarModelPostgres {
     } catch (error) {
       throw new Error(error)
     }
+  }
+
+  // Upload photos to the cloudinary
+  static async uploadImage (image) {
+    const uploadResult = await cloudinary.uploader.upload(image, {
+      upload_preset: 'ml_default'
+    }).catch((error) => { console.log(error) })
+
+    if (uploadResult) {
+      try {
+        fs.unlinkSync(image)
+      } catch (e) {
+        throw new Error(e)
+      }
+    }
+
+    return uploadResult.secure_url
   }
 
   // creates a new article
